@@ -1,0 +1,250 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Boss/Boss.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Bullets/EnemyBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Maps/Laser.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Maps/LaserBoss.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Hit/Damage.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Gradient" id=8]
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0.539063, 0, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 5
+emission_ring_radius = 2.0
+emission_ring_inner_radius = 2.0
+emission_ring_height = 2.0
+emission_ring_axis = Vector3( 0, 10, 1 )
+flag_disable_z = true
+spread = 57.08
+gravity = Vector3( 0, 2, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = -222.3
+angle_random = 0.22
+scale = 2.0
+color_ramp = SubResource( 9 )
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 0.738281, 0, 1, 1, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 400, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+angle = 720.0
+angle_random = 1.0
+scale = 3.0
+scale_random = 0.7
+color_ramp = SubResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8.5, 27.125 )
+
+[node name="Boss" type="Area2D"]
+script = ExtResource( 1 )
+enemyShot = ExtResource( 2 )
+laserShot = ExtResource( 4 )
+paricule = ExtResource( 5 )
+bossPath = NodePath(".")
+canonOnePath = NodePath("Canon")
+canonTwoPath = NodePath("Canon2")
+laserPath = NodePath("Laser")
+helpPath = NodePath("Special")
+chargePath = NodePath("Charge")
+laserTimerPath = NodePath("TimerLaser")
+chanceTimerPath = NodePath("TimerChance")
+canonsTimerPath = NodePath("TimerCanons")
+timerShotPath = NodePath("TimerShot")
+timerChangePath = NodePath("TimerChange")
+pos1Path = NodePath("Canon2/Canon3/Polygon2D4/Position2D2")
+pos2Path = NodePath("Canon2/Canon3/Polygon2D3/Position2D")
+pos3Path = NodePath("Canon/Cannon/Polygon2D/Position2D3")
+pos4Path = NodePath("Canon/Cannon/Polygon2D2/Position2D4")
+tweenPath = NodePath("Tween")
+phaseOnePath = NodePath("Phases/Phase1")
+phaseTwoPath = NodePath("Phases/Phase2")
+phaseThreePath = NodePath("Phases/Phase3")
+
+[node name="Charge" type="Particles2D" parent="."]
+position = Vector2( -6, 7.62939e-06 )
+rotation = 1.5708
+emitting = false
+amount = 20
+lifetime = 0.2
+speed_scale = 10.0
+process_material = SubResource( 7 )
+
+[node name="Special" type="Particles2D" parent="."]
+position = Vector2( -15, -25 )
+rotation = 2.60229
+emitting = false
+amount = 300
+lifetime = 3.0
+one_shot = true
+speed_scale = 5.0
+process_material = SubResource( 6 )
+
+[node name="TimerShot" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="TimerChance" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="TimerChange" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="TimerRand" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="TimerCanons" type="Timer" parent="."]
+autostart = true
+
+[node name="TimerLaser" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="TimerDoom" type="Timer" parent="."]
+process_mode = 0
+wait_time = 5.0
+autostart = true
+
+[node name="Laser" parent="." instance=ExtResource( 3 )]
+position = Vector2( 5, 7.62939e-06 )
+rotation = 1.5708
+scale = Vector2( 0.5, 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2( 3.5, 0.875008 )
+shape = SubResource( 1 )
+
+[node name="HIT" type="Position2D" parent="."]
+position = Vector2( 0, 7.62939e-06 )
+
+[node name="Phases" type="Node2D" parent="."]
+position = Vector2( -6, 7.62939e-06 )
+
+[node name="Phase3" type="Node2D" parent="Phases"]
+visible = false
+position = Vector2( -74, -101 )
+
+[node name="1" type="Polygon2D" parent="Phases/Phase3"]
+position = Vector2( 94, 6 )
+polygon = PoolVector2Array( -22, 68, -20, 70, -20, 71, -22, 71, -25, 69, -28, 70, -27, 71, -26, 71, -26, 72, -27, 73, -29, 74, -30, 76, -30, 77, -30, 78, -29, 78, -28, 77, -28, 78, -27, 77, -26, 76, -24, 75, -25, 76, -25, 79, -23, 80, -22, 82, -21, 84, -21, 85, -22, 86, -25, 86, -28, 88, -28, 91, -26, 89, -24, 90, -23, 92, -20, 90, -19, 92, -17, 93, -18, 95, -17, 97, -19, 98, -20, 100, -23, 98, -24, 100, -26, 101, -28, 99, -28, 102, -25, 104, -22, 104, -21, 105, -21, 106, -22, 108, -20, 109, -21, 110, -20, 112, -22, 111, -25, 111, -27, 110, -29, 108, -31, 104, -32, 109, -31, 112, -30, 113, -29, 116, -31, 115, -31, 117, -30, 119, -28.3605, 119.546, -29, 121, -27, 122, -25, 121, -22, 119, -21, 119, -20, 117, -20, 118, -17, 116, -18.3654, 118.048, -17, 119, -20, 120, -22, 122, -18, 123, -14, 122, -11, 121, -8, 119, -7, 120, -8, 122, -5, 122, 0, 121, 2, 118, 3, 116, 5, 116, 8, 114, 10, 115, 11, 113, 11, 110, 12, 105, 11, 101, 10, 103, 8, 105, 7, 108, 5, 109, 1, 107, 1, 105, 0, 103, 3, 101, 7, 101, 8, 100, 9, 98, 7, 99, 6, 98, 7, 96, 7, 94, 6, 92, 7, 91, 9, 92, 8, 90, 7, 89, 4, 89, 0, 87, 1, 85, 1, 83, 5, 81, 7, 79, 7, 80, 9, 80, 8, 81, 10, 82, 7, 82, 9, 83, 8, 85, 9, 86, 10, 85, 11, 85, 11, 82, 12, 80, 11, 79, 10, 76, 8, 77, 5, 75, 3, 75, 2, 72, 0, 69, -5, 68, -8, 68, -7, 69, -6, 69, -7, 70, -6, 70, -5, 71, -6, 72, -7, 72, -7, 72, -8, 71, -9, 74, -10, 72, -10, 72, -10, 71, -11, 71, -11, 69, -14, 68, -18, 67 )
+
+[node name="3" type="Polygon2D" parent="Phases/Phase3/1"]
+color = Color( 0.180392, 0.0235294, 0.337255, 1 )
+polygon = PoolVector2Array( -12, 71, -14, 70, -18, 69, -17, 71, -18, 73, -20, 74, -22, 73, -24, 73, -26, 73, -28, 75, -27, 76, -26, 75, -25, 75, -23, 74, -24, 76, -24, 77, -21, 78, -19, 81, -18, 84, -16, 85, -13, 84, -14, 85, -14, 86, -17, 85, -19, 86, -21, 87, -24, 88, -22, 89, -20, 88, -19, 89, -17, 90, -16, 92, -16, 93, -15, 95, -16, 97, -16, 98, -17, 100, -15, 100, -15, 102, -14, 102, -16, 103, -16, 101, -19, 101, -20, 102, -22, 101, -24, 102, -21, 103, -19, 104, -18, 107, -19, 109, -20, 111, -19, 113, -22, 112, -24, 113, -28, 112, -27, 115, -23, 117, -20, 116, -18, 116, -16, 115, -17, 117, -17, 118, -16, 119, -18, 120, -18, 121, -14, 120, -12, 119, -9, 117, -7, 117, -5, 119, -6, 121, -2, 119, 0, 117, 1, 114, 5, 114, 8, 112, 9, 109, 7, 111, 4, 112, -1, 108, -3, 109, -2, 108, -3, 108, -5, 109, -4, 107, -1, 105, -2, 103, 0, 101, 2, 100, 5, 99, 4, 98, 5, 97, 6, 95, 5, 93, 4, 92, 5, 91, 2, 90, 0, 89, -2, 87, -1, 85, -2, 82, 4, 79, 6, 79, 7, 78, 8, 79, 8, 79, 9, 79, 10, 80, 10, 81, 11, 81, 10, 80, 10, 79, 9, 78, 7, 78, 5, 77, 1, 77, 0, 74, -2, 71, -3, 70, -5, 69, -4, 70, -4, 71, -6, 73, -8, 73, -9, 75, -10, 73, -11, 73, -11, 72 )
+
+[node name="Phase2" type="Node2D" parent="Phases"]
+visible = false
+position = Vector2( -74, -101 )
+
+[node name="1" type="Polygon2D" parent="Phases/Phase2"]
+position = Vector2( 94, 6 )
+polygon = PoolVector2Array( -19, 69, -18, 70, -18, 71, -21, 72, -26, 73, -30, 77, -31, 81, -30, 83, -29, 81, -27, 79, -25, 79, -23, 80, -22, 82, -21, 84, -21, 85, -22, 86, -23, 87, -26, 89, -27, 91, -25, 90, -23, 90, -22, 91, -21, 91, -19, 92, -18, 93, -17, 95, -18, 97, -19, 98, -21, 99, -22, 99, -23, 100, -25, 100, -27, 99, -26, 101, -23, 103, -22, 104, -21, 105, -21, 106, -22, 108, -23, 110, -23, 112, -25, 111, -27, 111, -29, 109, -30, 107, -31, 110, -30, 113, -27, 117, -21, 118, -18, 117, -19, 118, -18, 119, -18, 120, -19, 121, -17, 121, -14, 122, -11, 121, -8, 119, -7, 120, -7, 121, -5, 121, -1, 120, 2, 118, 3, 116, 4, 115, 8, 112, 11, 105, 10, 102, 8, 104, 5, 105, 2, 103, 3, 101, 7, 100, 8, 99, 7, 98, 6, 96, 6, 94, 7, 92, 8, 91, 7, 90, 4, 89, 3, 87, 5, 85, 6, 84, 6, 83, 7, 83, 8, 84, 8, 86, 10, 88, 11, 85, 9, 82, 8, 79, 4, 76, 3, 75, 2, 72, -1, 70, -5, 69, -7, 69, -7, 70, -8, 71, -8, 72, -9, 72, -11, 69, -14, 68, -17, 69 )
+
+[node name="3" type="Polygon2D" parent="Phases/Phase2/1"]
+color = Color( 0.298039, 0.0235294, 0.568627, 1 )
+polygon = PoolVector2Array( -11, 71, -14, 70, -16, 71, -16, 73, -18, 74, -23, 74, -25, 75, -27, 77, -24, 77, -21, 79, -20, 80, -18, 79, -19, 80, -19, 83, -17, 85, -18, 86, -21, 88, -19, 89, -17, 90, -16, 92, -16, 93, -15, 95, -16, 97, -16, 98, -17, 100, -19, 100, -21, 101, -18, 104, -17, 105, -19, 107, -20, 109, -21, 111, -22, 113, -24, 114, -27, 113, -25, 115, -23, 116, -20, 117, -17, 116, -16, 117, -16, 119, -14, 120, -11, 119, -9, 117, -7, 117, -5, 118, -5, 119, -3, 119, -1, 117, 1, 115, 2, 113, 4, 112, 6, 110, 7, 107, 4, 107, 0, 105, -1, 104, -2, 105, -2, 104, -1, 103, -3, 101, -1, 99, 1, 100, 3, 99, 4, 98, 4, 97, 2, 96, 3, 95, 2, 94, 4, 93, 4, 92, 3, 91, 1, 90, -1, 91, -3, 89, -1, 87, 0, 85, 4, 83, 5, 82, 6, 81, 8, 82, 6, 80, 4, 79, 2, 78, 0, 76, -1, 73, -3, 71, -5, 71, -5, 72, -7, 73, -8, 74, -10, 73 )
+
+[node name="Phase1" type="Node2D" parent="Phases"]
+position = Vector2( -23, -100 )
+
+[node name="1" type="Polygon2D" parent="Phases/Phase1"]
+position = Vector2( 41, 5 )
+polygon = PoolVector2Array( -14, 73, -15, 74, -15, 74, -16, 74, -17, 73, -18, 73, -21, 72, -26, 74, -30, 78, -26, 77, -23, 77, -21, 78, -20, 79, -20, 82, -19, 84, -20, 85, -21, 85, -22, 86, -22, 87, -24, 91, -25, 92, -25, 93, -24, 95, -25, 97, -25, 98, -24, 99, -22, 103, -22, 104, -21, 105, -20, 105, -19, 106, -20, 108, -20, 111, -21, 112, -23, 113, -26, 113, -30, 112, -26, 116, -21, 118, -18, 117, -17, 117, -16, 116, -15, 116, -14, 117, -14, 118, -15, 119, -13, 120, -11, 119, -10, 118, -8, 117, -6, 118, -4, 118, -3, 117, -1, 117, 1, 116, 4, 115, 7, 115, 11, 113, 8, 112, 5, 109, 4, 105, 1, 102, 2, 100, 4, 99, 5, 98, 4, 96, 4, 94, 5, 92, 4, 91, 2, 90, 1, 88, 4, 85, 5, 82, 8, 80, 11, 79, 7, 76, 4, 76, 1, 74, -1, 73, -3, 73, -4, 72, -6, 72, -8, 73, -10, 72, -11, 71, -13, 70, -15, 71, -14, 72 )
+
+[node name="3" type="Polygon2D" parent="Phases/Phase1/1"]
+position = Vector2( -1, 0 )
+color = Color( 0.462745, 0.0588235, 0.870588, 1 )
+polygon = PoolVector2Array( -11, 73, -12, 75, -15, 76, -17, 75, -20, 74, -23, 75, -20, 76, -18, 77, -17, 78, -16, 80, -17, 82, -16, 83, -17, 85, -18, 86, -19, 86, -20, 87, -19, 89, -19, 90, -21, 91, -22, 93, -20, 94, -19, 95, -20, 96, -22, 97, -21, 99, -19, 100, -19, 101, -20, 103, -19, 104, -18, 104, -17, 105, -16, 107, -17, 108, -16, 110, -17, 112, -18, 113, -20, 114, -23, 115, -20, 116, -17, 115, -15, 114, -12, 115, -11, 117, -10, 117, -9, 116, -7, 115, -5, 116, -3, 115, -1, 115, 1, 114, 4, 114, 7, 113, 5, 112, 4, 110, 2, 106, 0, 104, -2, 103, -3, 102, -3, 101, 0, 100, 1, 99, 2, 97, 3, 96, 2, 95, 3, 94, 2, 93, 1, 91, 0, 90, -3, 89, -3, 88, -2, 87, 1, 86, 3, 84, 4, 81, 5, 79, 7, 78, 4, 77, 1, 76, -1, 75, -3, 75, -5, 74, -7, 75, -9, 74, -10, 73 )
+
+[node name="Canon2" type="Node2D" parent="."]
+position = Vector2( 0, -13 )
+scale = Vector2( 3, 3 )
+
+[node name="Canon3" type="Polygon2D" parent="Canon2"]
+position = Vector2( -5.33333, 30.3333 )
+rotation = 3.14159
+scale = Vector2( 0.432798, 0.317096 )
+color = Color( 0.596078, 0.258824, 0.713726, 1 )
+polygon = PoolVector2Array( -11.9059, 93.2728, -12.4235, 93, -12.6824, 93, -13.3647, 93.2727, -14, 94, -13.8824, 94.0909, -13.8824, 94.6364, -14.1412, 94.9091, -14.4, 95.3077, -14.2571, 95.4, -14.0679, 96, -14.2571, 96.6, -14.4, 96.6923, -14.1412, 97.0909, -13.8824, 97.3636, -13.8824, 97.9091, -14, 98, -13.3647, 98.7273, -12.6824, 99, -12.4235, 99, -11.9059, 98.7273, -11.5529, 98.7273, -11.5527, 98.2561, -11, 98, -10.6118, 97.3637, -10.3529, 97.091, -10.0941, 96.8182, -10.0941, 96.5455, -10.3529, 96.5455, -10.6118, 96.2728, -10.6118, 96, -10.6118, 95.7273, -10.3529, 95.4546, -10.0941, 95.4546, -10.0941, 95.1819, -10.3529, 94.9091, -10.6118, 94.6364, -11, 94, -11, 94, -11.5527, 94.0513, -11.5529, 93.2727 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="Canon2/Canon3"]
+position = Vector2( 23.1055, 49.9006 )
+scale = Vector2( 0.768384, 0.546856 )
+color = Color( 0.945098, 0.866667, 0.6, 1 )
+polygon = PoolVector2Array( -50.7272, 79.1304, -50.9091, 78.6956, -51.2727, 78.2608, -51.8182, 78.3946, -51.2727, 77.7257, -50.5454, 77.6086, -50, 77.3912, -49.4545, 77.3912, -49.0909, 77.6086, -48.9091, 78.0434, -47.8182, 77.6086, -47.4545, 77.6086, -47.0909, 77.826, -46.5454, 77.826, -45.4545, 77.6086, -44.9091, 77.826, -44.5454, 78.2608, -44.3636, 78.6956, -44.3636, 78.913, -44.5454, 79.3478, -44.5454, 79.9999, -44.3636, 80.4347, -44.3636, 80.6521, -44.5454, 81.0869, -44.9091, 81.3043, -45.4545, 81.5217, -46.5454, 81.3043, -47.0909, 81.3043, -47.6363, 81.5217, -48, 81.5217, -48.9091, 81.0869, -49.0909, 81.5217, -49.4545, 81.7391, -50, 81.7391, -50.5454, 81.5217, -51.2727, 81.4046, -51.8182, 80.7357, -51.2727, 80.8695, -50.9091, 80.4347, -50.7272, 79.9999, -50.9091, 79.5652 )
+
+[node name="Position2D" type="Position2D" parent="Canon2/Canon3/Polygon2D3"]
+position = Vector2( -49, 79.6114 )
+rotation = -1.5708
+
+[node name="Polygon2D4" type="Polygon2D" parent="Canon2/Canon3"]
+position = Vector2( 23.1055, 55.1566 )
+scale = Vector2( 0.768384, 0.546856 )
+color = Color( 0.945098, 0.866667, 0.6, 1 )
+polygon = PoolVector2Array( -50.7272, 79.1304, -50.9091, 78.6956, -51.2727, 78.2608, -51.8182, 78.3946, -51.2727, 77.7257, -50.5454, 77.6086, -50, 77.3912, -49.4545, 77.3912, -49.0909, 77.6086, -48.9091, 78.0434, -47.8182, 77.6086, -47.4545, 77.6086, -47.0909, 77.826, -46.5454, 77.826, -45.4545, 77.6086, -44.9091, 77.826, -44.5454, 78.2608, -44.3636, 78.6956, -44.3636, 78.913, -44.5454, 79.3478, -44.5454, 79.9999, -44.3636, 80.4347, -44.3636, 80.6521, -44.5454, 81.0869, -44.9091, 81.3043, -45.4545, 81.5217, -46.5454, 81.3043, -47.0909, 81.3043, -47.6363, 81.5217, -48, 81.5217, -48.9091, 81.0869, -49.0909, 81.5217, -49.4545, 81.7391, -50, 81.7391, -50.5454, 81.5217, -51.2727, 81.4046, -51.8182, 80.7357, -51.2727, 80.8695, -50.9091, 80.4347, -50.7272, 79.9999, -50.9091, 79.5652 )
+
+[node name="Position2D2" type="Position2D" parent="Canon2/Canon3/Polygon2D4"]
+position = Vector2( -49, 79 )
+rotation = -1.5708
+scale = Vector2( 1.92227, 1.00234 )
+
+[node name="Canon" type="Node2D" parent="."]
+position = Vector2( 0, 14 )
+scale = Vector2( 3, 3 )
+
+[node name="Cannon" type="Polygon2D" parent="Canon"]
+position = Vector2( -5, 30.6667 )
+rotation = 3.14159
+scale = Vector2( 0.432798, 0.317096 )
+color = Color( 0.596078, 0.258824, 0.713726, 1 )
+polygon = PoolVector2Array( -11.9059, 93.2728, -12.4235, 93, -12.6824, 93, -13.3647, 93.2727, -14, 94, -13.8824, 94.0909, -13.8824, 94.6364, -14.1412, 94.9091, -14.4, 95.3077, -14.2571, 95.4, -14.0679, 96, -14.2571, 96.6, -14.4, 96.6923, -14.1412, 97.0909, -13.8824, 97.3636, -13.8824, 97.9091, -14, 98, -13.3647, 98.7273, -12.6824, 99, -12.4235, 99, -11.9059, 98.7273, -11.5529, 98.7273, -11.5527, 98.2561, -11, 98, -10.6118, 97.3637, -10.3529, 97.091, -10.0941, 96.8182, -10.0941, 96.5455, -10.3529, 96.5455, -10.6118, 96.2728, -10.6118, 96, -10.6118, 95.7273, -10.3529, 95.4546, -10.0941, 95.4546, -10.0941, 95.1819, -10.3529, 94.9091, -10.6118, 94.6364, -11, 94, -11, 94, -11.5527, 94.0513, -11.5529, 93.2727 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Canon/Cannon"]
+position = Vector2( 23.1055, 49.9006 )
+scale = Vector2( 0.768384, 0.546856 )
+color = Color( 0.945098, 0.866667, 0.6, 1 )
+polygon = PoolVector2Array( -50.7272, 79.1304, -50.9091, 78.6956, -51.2727, 78.2608, -51.8182, 78.3946, -51.2727, 77.7257, -50.5454, 77.6086, -50, 77.3912, -49.4545, 77.3912, -49.0909, 77.6086, -48.9091, 78.0434, -47.8182, 77.6086, -47.4545, 77.6086, -47.0909, 77.826, -46.5454, 77.826, -45.4545, 77.6086, -44.9091, 77.826, -44.5454, 78.2608, -44.3636, 78.6956, -44.3636, 78.913, -44.5454, 79.3478, -44.5454, 79.9999, -44.3636, 80.4347, -44.3636, 80.6521, -44.5454, 81.0869, -44.9091, 81.3043, -45.4545, 81.5217, -46.5454, 81.3043, -47.0909, 81.3043, -47.6363, 81.5217, -48, 81.5217, -48.9091, 81.0869, -49.0909, 81.5217, -49.4545, 81.7391, -50, 81.7391, -50.5454, 81.5217, -51.2727, 81.4046, -51.8182, 80.7357, -51.2727, 80.8695, -50.9091, 80.4347, -50.7272, 79.9999, -50.9091, 79.5652 )
+
+[node name="Position2D3" type="Position2D" parent="Canon/Cannon/Polygon2D"]
+position = Vector2( -49, 79.5 )
+rotation = -1.5708
+
+[node name="Polygon2D2" type="Polygon2D" parent="Canon/Cannon"]
+position = Vector2( 23.1055, 55.1566 )
+scale = Vector2( 0.768384, 0.546856 )
+color = Color( 0.945098, 0.866667, 0.6, 1 )
+polygon = PoolVector2Array( -50.7272, 79.1304, -50.9091, 78.6956, -51.2727, 78.2608, -51.8182, 78.3946, -51.2727, 77.7257, -50.5454, 77.6086, -50, 77.3912, -49.4545, 77.3912, -49.0909, 77.6086, -48.9091, 78.0434, -47.8182, 77.6086, -47.4545, 77.6086, -47.0909, 77.826, -46.5454, 77.826, -45.4545, 77.6086, -44.9091, 77.826, -44.5454, 78.2608, -44.3636, 78.6956, -44.3636, 78.913, -44.5454, 79.3478, -44.5454, 79.9999, -44.3636, 80.4347, -44.3636, 80.6521, -44.5454, 81.0869, -44.9091, 81.3043, -45.4545, 81.5217, -46.5454, 81.3043, -47.0909, 81.3043, -47.6363, 81.5217, -48, 81.5217, -48.9091, 81.0869, -49.0909, 81.5217, -49.4545, 81.7391, -50, 81.7391, -50.5454, 81.5217, -51.2727, 81.4046, -51.8182, 80.7357, -51.2727, 80.8695, -50.9091, 80.4347, -50.7272, 79.9999, -50.9091, 79.5652 )
+
+[node name="Position2D4" type="Position2D" parent="Canon/Cannon/Polygon2D2"]
+position = Vector2( -49, 79 )
+rotation = -1.5695
+
+[connection signal="area_entered" from="." to="." method="OnBossAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnBossBodyEntered"]
+[connection signal="timeout" from="TimerShot" to="." method="OnTimerShotTimeout"]
+[connection signal="timeout" from="TimerChance" to="." method="OnTimerChanceTimeout"]
+[connection signal="timeout" from="TimerChange" to="." method="OnTimerChangeTimeout"]
+[connection signal="timeout" from="TimerRand" to="." method="OnTimerRandTimeout"]
+[connection signal="timeout" from="TimerCanons" to="." method="OnTimerCanonsTimeout"]
+[connection signal="timeout" from="TimerLaser" to="." method="OnTimerLaserTimeout"]
+[connection signal="timeout" from="TimerDoom" to="." method="OnTimerDoomTimeout"]

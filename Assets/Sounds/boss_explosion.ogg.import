@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://import/boss_explosion.ogg-a0d915d3b07770a1a5fe2f312bf8195c.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/boss_explosion.ogg"
+dest_files=[ "res://import/boss_explosion.ogg-a0d915d3b07770a1a5fe2f312bf8195c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,284 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://Scripts/Entity/Player/Player.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Bullets/PlayerBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sounds/player_shoot2.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/player_shoot3.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/player_shoot1.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/player_shoot0.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Sounds/loselife.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/ghost.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Sounds/enemy_explosion.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/enemy0_explosion.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/enemy2_explosion.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/enemy1_explosion.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/enemy3_explosion.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sounds/enemy_shoot.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sounds/powerup_life.ogg" type="AudioStream" id=15]
+[ext_resource path="res://Assets/Sounds/powerup_firePower.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Sounds/powerup_fireUpgrade.ogg" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Sounds/boss0_loop.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Sounds/boss2_loop.ogg" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sounds/boss1_loop.ogg" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sounds/win_jingle.ogg" type="AudioStream" id=21]
+[ext_resource path="res://Scenes/Menu/BlackInvers.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/Sounds/powerup_bomb.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Assets/Sounds/powerup_shield.ogg" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sounds/boss_shoot.ogg" type="AudioStream" id=25]
+[ext_resource path="res://Assets/Sounds/boss_explosion.ogg" type="AudioStream" id=26]
+[ext_resource path="res://Assets/Sounds/boss_pre_explosion.ogg" type="AudioStream" id=27]
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 0, 0.0859375, 1, 1, 0, 0.71875, 1, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 400, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+angle = 720.0
+angle_random = 1.0
+scale = 22.15
+scale_random = 0.7
+color_ramp = SubResource( 4 )
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 17.0
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 0, -1 )
+script = ExtResource( 1 )
+speed = 500
+playerBullet = ExtResource( 2 )
+fondu = ExtResource( 22 )
+sfxShotPath = NodePath("Shoot")
+sfxHitPath = NodePath("Hit")
+sfxGhostPath = NodePath("Ghost")
+sfxDeathEnemyPath = NodePath("DeathEnemy")
+sfxHitEnemyPath = NodePath("HitEnemy")
+sfxShotEnemyPath = NodePath("ShotEnemy")
+sfxHealthPath = NodePath("Health")
+sfxUpgradeShotPath = NodePath("UpgradeShot")
+sfxUpgradeCanonsPath = NodePath("UpgradeCanons")
+musicVictoryPath = NodePath("Victory")
+sfxBombPath = NodePath("Bomb")
+sfxBossShotPath = NodePath("Shot")
+sfxPreExploPath = NodePath("PreExplosion")
+sfxExploPath = NodePath("Explosion")
+timerFeaturePath = NodePath("TimerFeature")
+timerLaserPath = NodePath("TimerLaser")
+timerWaitPath = NodePath("TimerWait")
+timerShotPath = NodePath("TimerShot")
+timerLoadPath = NodePath("TimerBoss")
+tweenPath = NodePath("Tween")
+tween2Path = NodePath("Tween2")
+particuleSpecialPath = NodePath("Special")
+canonsContainerPath = NodePath("CanonsContainer")
+canonsPolyContainerPath = NodePath("CanonsPolyContainer")
+miniShipContainerPath = NodePath("MiniShipContainer")
+sfxBoss1Path = NodePath("Boss1")
+sfxBoss2Path = NodePath("Boss2")
+sfxBoss3Path = NodePath("Boss3")
+sfxShieldPath = NodePath("Ghost2")
+levelColorPath = NodePath("Level")
+godModePath = NodePath("Ship")
+shotAudioPlayers = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ]
+deathEnemy = [ ExtResource( 10 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 13 ) ]
+
+[node name="CanonsPolyContainer" type="Node2D" parent="."]
+
+[node name="Milieux" type="Polygon2D" parent="CanonsPolyContainer"]
+position = Vector2( 33.2272, 21 )
+scale = Vector2( 1.25454, 1 )
+color = Color( 0.427451, 0.427451, 0.427451, 1 )
+polygon = PoolVector2Array( -22.5, -22, -5.83333, -23, 0.833334, -23, 2.5, -22, 7.5, -22, 10, -24, 11.6667, -23, 14.1667, -22, 13.3333, -20, 14.1667, -18, 11.6667, -17, 10, -16, 7.5, -18, 2.44462, -18, 0.833334, -17, -5.83333, -17, -22.5, -18 )
+
+[node name="Haut" type="Polygon2D" parent="CanonsPolyContainer"]
+position = Vector2( -12.658, -4 )
+scale = Vector2( 1.14245, 1 )
+color = Color( 0.427451, 0.427451, 0.427451, 1 )
+polygon = PoolVector2Array( -28.3093, -22, -12.0448, -23, -7.26112, -22, 7.08989, -22, 9.00335, -23, 12.8303, -22, 11.8736, -20, 12.8303, -18, 9.00335, -17, 7.08989, -18, -26.3958, -18 )
+
+[node name="Haut2" type="Polygon2D" parent="CanonsPolyContainer"]
+position = Vector2( -11.1813, 44 )
+scale = Vector2( 1.13729, 1 )
+color = Color( 0.427451, 0.427451, 0.427451, 1 )
+polygon = PoolVector2Array( -28.702, -22, 7.08989, -22, 9.00335, -23, 12.8303, -22, 11.8736, -20, 12.8303, -18, 9.00335, -17, 7.08989, -18, -7.64643, -18, -13.3943, -16, -30.6155, -17 )
+
+[node name="MS" type="Polygon2D" parent="CanonsPolyContainer"]
+position = Vector2( 5, -43 )
+scale = Vector2( 0.355427, 0.345679 )
+color = Color( 0.427451, 0.427451, 0.427451, 1 )
+polygon = PoolVector2Array( -25.3217, -23.1429, -14.0676, -26.0357, -8.44055, -23.1429, 8.44055, -23.1429, 11.2541, -26.0357, 14.6392, -23.1429, 14.0676, -20.25, 14.6392, -17.3571, 11.2541, -14.4643, 8.44055, -17.3571, -8.44055, -17.3571, -14.0676, -14.4643, -25.3217, -17.3571 )
+
+[node name="MS2" type="Polygon2D" parent="CanonsPolyContainer"]
+position = Vector2( 5, 60 )
+scale = Vector2( 0.355427, 0.345679 )
+color = Color( 0.427451, 0.427451, 0.427451, 1 )
+polygon = PoolVector2Array( -21.9588, -23.1429, -14.0676, -26.0357, -8.44055, -23.1429, 8.44055, -23.1429, 11.2541, -26.0357, 14.6392, -23.1429, 14.0676, -20.25, 14.6392, -17.3571, 11.2541, -14.4643, 8.44055, -17.3571, -8.44055, -17.3571, -14.0676, -14.4643, -22, -17.5 )
+
+[node name="MiniShipContainer" type="Node2D" parent="."]
+
+[node name="MiniShip" type="Node2D" parent="MiniShipContainer"]
+position = Vector2( -14, -55 )
+scale = Vector2( 1.67156, 2.28 )
+
+[node name="Polygon2D" type="Polygon2D" parent="MiniShipContainer/MiniShip"]
+position = Vector2( -6.58068, 2.19298 )
+scale = Vector2( 2, 2 )
+polygon = PoolVector2Array( 0, -2, 8, 0, 0, 2, 1.60312, 0 )
+
+[node name="MiniShip2" type="Node2D" parent="MiniShipContainer"]
+position = Vector2( 0, 40 )
+
+[node name="Polygon2D" type="Polygon2D" parent="MiniShipContainer/MiniShip2"]
+position = Vector2( -25, 15 )
+scale = Vector2( 5.25, 5.75 )
+polygon = PoolVector2Array( 0, -2, 4.95238, -0.347825, 0, 1.21739, 0.952381, -0.347825 )
+
+[node name="CanonsContainer" type="Node2D" parent="."]
+position = Vector2( 3, 0 )
+
+[node name="Midle" type="Position2D" parent="CanonsContainer"]
+position = Vector2( 46, 1 )
+
+[node name="RayCast2D" type="RayCast2D" parent="CanonsContainer/Midle"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Haut" type="Position2D" parent="CanonsContainer"]
+position = Vector2( -3, -23.8462 )
+
+[node name="RayCast2D" type="RayCast2D" parent="CanonsContainer/Haut"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Bas" type="Position2D" parent="CanonsContainer"]
+position = Vector2( -3, 23.8462 )
+
+[node name="RayCast2D" type="RayCast2D" parent="CanonsContainer/Bas"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Bas2" type="Position2D" parent="CanonsContainer"]
+position = Vector2( 7, 53 )
+
+[node name="RayCast2D" type="RayCast2D" parent="CanonsContainer/Bas2"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Bas3" type="Position2D" parent="CanonsContainer"]
+position = Vector2( 7, -50 )
+
+[node name="RayCast2D" type="RayCast2D" parent="CanonsContainer/Bas3"]
+cast_to = Vector2( 100, 0 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Tween2" type="Tween" parent="."]
+
+[node name="TimerShot" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.2
+one_shot = true
+
+[node name="TimerFeature" type="Timer" parent="."]
+
+[node name="TimerLaser" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="TimerWait" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="TimerBoss" type="Timer" parent="."]
+autostart = true
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Ghost" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -5.0
+
+[node name="DeathEnemy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="HitEnemy" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
+[node name="ShotEnemy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+volume_db = -5.0
+
+[node name="Health" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[node name="UpgradeShot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 17 )
+
+[node name="UpgradeCanons" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+
+[node name="Special" type="Particles2D" parent="."]
+position = Vector2( 1, 0 )
+rotation = -3.6809
+emitting = false
+amount = 400
+lifetime = 74.86
+one_shot = true
+speed_scale = 5.0
+process_material = SubResource( 2 )
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2( -22, 0 )
+shape = SubResource( 1 )
+
+[node name="Ship" type="Polygon2D" parent="."]
+position = Vector2( -3.44188, 4.17233e-06 )
+scale = Vector2( 1.09302, 1.0625 )
+polygon = PoolVector2Array( 37, 1, -47, -32, -34.3617, 1, -49, 32 )
+
+[node name="Level" type="Polygon2D" parent="."]
+position = Vector2( -31.7872, -184 )
+scale = Vector2( 4.98054, 34.4985 )
+color = Color( 0.00784314, 1, 0, 1 )
+polygon = PoolVector2Array( 0.512634, 5.36504, -1.84975, 5.9423, 9.99636, 5.36504, -1.84975, 4.75384 )
+
+[node name="Boss1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+
+[node name="Boss2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+
+[node name="Boss3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+
+[node name="Victory" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+
+[node name="Bomb" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 23 )
+
+[node name="Ghost2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 24 )
+
+[node name="Shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 26 )
+
+[node name="PreExplosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 27 )
+
+[connection signal="timeout" from="TimerShot" to="." method="OnTimerShotTimeout"]
+[connection signal="timeout" from="TimerFeature" to="." method="OnTimerFeatureTimeout"]
+[connection signal="timeout" from="TimerLaser" to="." method="OnTimerLaserTimeout"]
+[connection signal="timeout" from="TimerWait" to="." method="OnTimerWaitTimeout"]
+[connection signal="timeout" from="TimerBoss" to="." method="OnTimerBossTimeout"]

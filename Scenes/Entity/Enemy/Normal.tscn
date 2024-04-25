@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Entity/Enemy/Normal.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Bullets/EnemyBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Hit/Damage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Collectible/Health.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Collectible/Bomb.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8.25, 6.42857 )
+
+[node name="Normal" type="Area2D"]
+position = Vector2( -1, 0 )
+scale = Vector2( 6, 7 )
+script = ExtResource( 1 )
+score = 2500
+health = 100
+healthScene = ExtResource( 4 )
+bombScene = ExtResource( 5 )
+paricule = ExtResource( 3 )
+enemyShot = ExtResource( 2 )
+posPath = NodePath("Pos")
+selfPath = NodePath(".")
+extPath = NodePath("Ext")
+intPath = NodePath("Int")
+tweenPath = NodePath("Tween")
+canonsContainerPath = NodePath("CanonsContainer")
+X = 7.0
+Y = 8.0
+XE = 6.0
+YE = 7.0
+radius = 1.0
+timerPath = NodePath("TimerShot")
+canonOnePath = NodePath("Position2D")
+canonTwoPath = NodePath("Position2D2")
+
+[node name="CanonsContainer" type="Node2D" parent="."]
+
+[node name="Polygon2D2" type="Polygon2D" parent="CanonsContainer"]
+position = Vector2( 1.66667, -0.25 )
+color = Color( 0.482353, 0.537255, 0.6, 1 )
+polygon = PoolVector2Array( 1.33333, -2.75, 1.33333, -2.25, -2, -2, -2.33333, -2.25, -4.66667, -2.25, -5.33333, -2, -6.33333, -2, -6, -2.25, -6, -2.5, -6, -2.75, -6.33333, -3, -5.33333, -3, -4.66667, -2.75, -2.33333, -2.75, -2, -3 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="CanonsContainer"]
+position = Vector2( 1.66667, 5.25 )
+color = Color( 0.482353, 0.537255, 0.6, 1 )
+polygon = PoolVector2Array( 1.33333, -2.75, 1.33333, -2.25, -2, -2, -2.33333, -2.25, -4.66667, -2.25, -5.33333, -2, -6.33333, -2, -5.66667, -2.25, -5.66667, -2.5, -5.66667, -2.75, -6.33333, -3, -5.33333, -3, -4.66667, -2.75, -2.33333, -2.75, -2, -3 )
+
+[node name="Hit" type="CollisionShape2D" parent="."]
+position = Vector2( 0.416663, 0.142857 )
+shape = SubResource( 1 )
+
+[node name="Ext" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -7.5, 0, -4.83333, 0.428571, -2, 1.57143, -0.666667, 1.75, 1.33333, 3.75, 0, 6, 1.66667, 5.71429, 4, 4.5, 6.5, 2.57143, 8.16667, 2.71429, 8.66667, 1.28571, 10, 0.75, 9, 0, 10, -0.75, 8.66667, -1.28571, 8.16667, -2.71429, 6.5, -2.57143, 3.66667, -4.75, 1.5, -5.71429, 0, -6, 1.33333, -3.75, -0.666667, -1.75, -2, -1.57143, -4.83333, -0.428571 )
+
+[node name="Int" type="Polygon2D" parent="."]
+modulate = Color( 0.768627, 1, 0, 1 )
+position = Vector2( -1.90735e-06, 0 )
+scale = Vector2( 1, 2.25 )
+polygon = PoolVector2Array( 7.5, -0.761905, 5.83333, -0.634921, 2.66667, -1.65079, 2.16667, -1.26984, 1.90735e-06, -0.444444, -2, -0.31746, -4.33333, 0, -2, 0.31746, 1.90735e-06, 0.444444, 2.16667, 1.26984, 2.66667, 1.65079, 5.83333, 0.634921, 7.5, 0.761905, 8.33333, 0.190476, 7.83333, 0, 8.33333, -0.190476 )
+
+[node name="Pos" type="Position2D" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="TimerShot" type="Timer" parent="."]
+autostart = true
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -4.5, -2.71429 )
+
+[node name="Position2D2" type="Position2D" parent="."]
+position = Vector2( -4.5, 2.71429 )
+
+[connection signal="area_entered" from="." to="." method="OnNormalAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnNormalBodyEntered"]
+[connection signal="timeout" from="TimerShot" to="." method="OnTimerShotTimeout"]

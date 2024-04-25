@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/UX/Transi.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Graphism/LOGO-ISART_baselineFR_150DPI_white-removebg-preview.png" type="Texture" id=2]
+
+[node name="Start" type="Node2D"]
+position = Vector2( 640, 360 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 1 )
+tweenPath = NodePath("Tween")
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 1.5
+autostart = true
+
+[node name="Logo" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

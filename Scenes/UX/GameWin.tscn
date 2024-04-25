@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/UX/GameWin.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/Font.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+size = 120
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 2 )
+
+[node name="GameWin" type="ColorRect"]
+margin_left = -8.0
+margin_right = 1285.0
+margin_bottom = 744.0
+color = Color( 0, 0, 0, 0.807843 )
+script = ExtResource( 1 )
+selfPath = NodePath(".")
+retryPath = NodePath("Retry")
+menuPath = NodePath("Menu")
+winPath = NodePath("Label")
+highPath = NodePath("Label2")
+
+[node name="Label" type="Label" parent="."]
+margin_top = 50.0
+margin_right = 1279.0
+margin_bottom = 241.0
+custom_colors/font_color_shadow = Color( 0, 0.14902, 0.6, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 3 )
+text = "YOU WIN"
+align = 1
+valign = 1
+
+[node name="Retry" type="Button" parent="."]
+margin_left = -1.0
+margin_top = 452.0
+margin_right = 1279.0
+margin_bottom = 548.0
+rect_pivot_offset = Vector2( -246, -528 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.901961, 0.505882, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "UI_RETRY"
+flat = true
+
+[node name="Menu" type="Button" parent="."]
+margin_left = 2.0
+margin_top = 530.0
+margin_right = 1278.0
+margin_bottom = 626.0
+rect_pivot_offset = Vector2( -246, -528 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 0.901961, 0.505882, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "UI_MENU"
+flat = true
+icon_align = 1
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 7.0
+margin_top = 252.0
+margin_right = 1288.0
+margin_bottom = 316.0
+custom_fonts/font = SubResource( 4 )
+text = "HIGH SCORE :"
+align = 1
+valign = 1
+
+[connection signal="pressed" from="Retry" to="." method="OnRetryPressed"]
+[connection signal="pressed" from="Menu" to="." method="OnMenuPressed"]

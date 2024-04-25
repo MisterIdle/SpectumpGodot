@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Boss/LaserBoss.cs" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 9, 253.307 )
+
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+
+[sub_resource type="Environment" id=6]
+background_mode = 4
+glow_enabled = true
+glow_intensity = 1.0
+glow_strength = 1.1
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[node name="LaserBoss" type="Area2D"]
+scale = Vector2( 4.96, 6.48 )
+script = ExtResource( 1 )
+timerPath = NodePath("Timer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.806452, 246.693 )
+shape = SubResource( 3 )
+
+[node name="Beam" type="Line2D" parent="."]
+material = SubResource( 7 )
+position = Vector2( 0.280065, -0.310378 )
+rotation = 1.5708
+scale = Vector2( 0.667145, 1 )
+points = PoolVector2Array( -3, 0, 745, -3.24249e-05 )
+default_color = Color( 1, 0, 0, 1 )
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 6 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="OnLaserBossAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnLaserBossBodyEntered"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

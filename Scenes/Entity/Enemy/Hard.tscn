@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Entity/Enemy/Hard.cs" type="Script" id=1]
+[ext_resource path="res://Scenes/Bullets/EnemyBullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Hit/Damage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Sounds/enemy_shoot.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/Collectible/Health.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Collectible/Bomb.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 23.6667, 13.25 )
+
+[node name="Hard" type="Area2D"]
+scale = Vector2( 3, 4 )
+script = ExtResource( 1 )
+score = 5000
+health = 300
+speed = -0.5
+healthScene = ExtResource( 5 )
+bombScene = ExtResource( 6 )
+paricule = ExtResource( 3 )
+enemyShot = ExtResource( 2 )
+posPath = NodePath("CanonsContainer/Pos")
+selfPath = NodePath(".")
+extPath = NodePath("Ext")
+intPath = NodePath("Int")
+tweenPath = NodePath("CanonsContainer/Tween")
+canonsContainerPath = NodePath("Node2D")
+X = 4.0
+Y = 5.0
+XE = 3.0
+YE = 4.0
+timerPath = NodePath("TimerShot")
+canonsPoly = NodePath("Canons")
+
+[node name="Canons" type="Polygon2D" parent="."]
+position = Vector2( -19, 2.5 )
+color = Color( 0.482353, 0.537255, 0.6, 1 )
+polygon = PoolVector2Array( 1.33333, -2.75, 1.33333, -2.25, -0.333334, -1, -2.66667, -1.25, -3.33333, -1.75, -4, -1.75, -4.66667, -1.5, -5.66667, -1.25, -6, -1.5, -6, -1.75, -7.66667, -2, -10, -1.5, -10.6667, -1.75, -12, -2, -10, -2.25, -11, -2.5, -10, -2.75, -12, -3, -10.6667, -3.25, -10, -3.5, -7.66667, -3, -6, -3.25, -6, -3.5, -5.66667, -3.75, -4.66667, -3.5, -4, -3.25, -3.33333, -3.25, -2.66667, -3.75, -0.333334, -4 )
+
+[node name="Ext" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -19, 0, -20, 1.75, -18.6667, 1.75, -15.3333, 3.25, -20, 3.75, -25, 3.25, -20, 6.75, -13, 9.25, -14.6667, 10.75, -17, 11.25, -10.6667, 12.5, -2.33333, 10.75, 0.333333, 10.75, 2.33333, 9, 1.33333, 7.25, 1.33333, 4.75, 3.33333, 4.25, 9.33333, 7, 12.6667, 6.25, 9.66667, 3.5, 9, 1.25, 10, 0, 9, -1.25, 9.66667, -3.25, 11.0247, -4.68264, 12.6667, -6.25, 9.33333, -7, 8.18332, -6.47291, 3.33333, -4.25, 1.33333, -4.75, 1.33333, -7.25, 2.66667, -9, 0.333333, -10.5, -2.33333, -10.5, -10.6667, -12.5, -17, -11, -14.6667, -10.5, -13, -8.75, -20.3333, -6.5, -25, -3, -20, -3.75, -15.3333, -3.5, -18.6667, -1.75, -20, -1.75 )
+
+[node name="Int" type="Polygon2D" parent="."]
+modulate = Color( 0.227451, 0.0235294, 0.0235294, 1 )
+position = Vector2( -3.66667, 0 )
+scale = Vector2( 1, 2.25 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 12.6667, -2.55556, 7.33333, -1.33333, 3.33333, -1.77778, 3, -3.22222, 3.66667, -4.11111, 1.33333, -4, -7, -5, -8.66667, -4.66667, -6, -3.88889, -6.33333, -3.44444, -11, -3.11111, -16.3333, -2.22222, -11, -2.11111, -8.33333, -1.55556, -14, -0.444444, -12.6667, 0, -14, 0.444444, -8.33333, 1.44444, -11, 2, -16.3333, 2, -11, 3.11111, -6.33333, 3.44444, -6, 3.88889, -8.66667, 4.77778, -7, 5.11111, 1.33333, 4.11111, 3.66667, 4.22222, 2.66667, 3.22222, 3.33333, 1.88889, 7.66667, 1.33333, 12.6667, 2.55556, 14, 2.44444, 11.3333, 1.66667, 10.3333, 0.555556, 11.6667, 0, 10.3333, -0.555556, 11.6667, -1.55556, 14, -2.44444 )
+
+[node name="Hit" type="CollisionShape2D" parent="."]
+position = Vector2( -8.66667, 0 )
+shape = SubResource( 1 )
+
+[node name="CanonsContainer" type="Node2D" parent="."]
+
+[node name="Pos" type="Position2D" parent="CanonsContainer"]
+
+[node name="Tween" type="Tween" parent="CanonsContainer"]
+
+[node name="Shot" type="AudioStreamPlayer2D" parent="CanonsContainer"]
+position = Vector2( -7.33333, 0 )
+stream = ExtResource( 4 )
+
+[node name="TimerChance" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="TimerShot" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[connection signal="area_entered" from="." to="." method="OnNormalAreaEntered"]
+[connection signal="body_entered" from="." to="." method="OnNormalBodyEntered"]
+[connection signal="timeout" from="TimerChance" to="." method="OnTimerChanceTimeout"]
+[connection signal="timeout" from="TimerShot" to="." method="OnTimerShotTimeout"]

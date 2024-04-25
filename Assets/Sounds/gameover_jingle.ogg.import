@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://import/gameover_jingle.ogg-13d73d40aef4c24b16a0401ff12bcee2.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/gameover_jingle.ogg"
+dest_files=[ "res://import/gameover_jingle.ogg-13d73d40aef4c24b16a0401ff12bcee2.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

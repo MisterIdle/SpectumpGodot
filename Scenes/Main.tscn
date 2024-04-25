@@ -1,0 +1,473 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://Scenes/UX/UX.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Maps/Cam.cs" type="Script" id=2]
+[ext_resource path="res://Scenes/Maps/Beam.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Entity/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Maps/BossActivator.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Maps/Main.cs" type="Script" id=6]
+[ext_resource path="res://Assets/Sounds/level_loop.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/ambience_loop.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Assets/Graphism/Ground/sky.png" type="Texture" id=9]
+[ext_resource path="res://Scenes/Menu/Black.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Maps/Laser.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scripts/Maps/ObstaclesContainer.cs" type="Script" id=12]
+[ext_resource path="res://Scenes/Collectible/CanonLevel.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/UX/Pause.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Menu/GameOver.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Assets/Sounds/gameover_jingle.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Scenes/Entity/Enemy/PopCorn.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/Entity/Enemy/Normal.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Collectible/ShootingLevel.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/Entity/Walls/Walls.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scenes/Collectible/Ghost.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scenes/Entity/Enemy/Hard.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Assets/Fonts/Font.ttf" type="DynamicFontData" id=23]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 23 )
+
+[node name="Main" type="Node2D"]
+position = Vector2( 1, 0 )
+script = ExtResource( 6 )
+mainMusicPath = NodePath("MainAudio")
+bulletContainerPath = NodePath("ParallaxBackground/Gameplay/BulletContainer")
+enemyContainerPath = NodePath("ParallaxBackground/Gameplay/EnemyContainer")
+explosionContainerPath = NodePath("ParallaxBackground/Gameplay/ExplosionContainer")
+wallContainerPath = NodePath("ParallaxBackground/Gameplay/WallsContainer")
+colContainerPath = NodePath("ParallaxBackground/Gameplay/CollectibleContainer")
+sfxGOPath = NodePath("GameOver")
+
+[node name="MainAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true
+
+[node name="SecondsAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+
+[node name="Cam" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 2 )
+
+[node name="UX" parent="Cam" instance=ExtResource( 1 )]
+margin_left = -1.0
+margin_right = -1.0
+
+[node name="Pos" type="Position2D" parent="Cam"]
+position = Vector2( -44, 58 )
+
+[node name="Special" type="ColorRect" parent="Cam"]
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 1327.0
+margin_bottom = 747.0
+color = Color( 1, 1, 1, 0 )
+
+[node name="Pause" parent="Cam" instance=ExtResource( 14 )]
+visible = false
+selfPath = NodePath(".")
+
+[node name="GameOver" parent="Cam" instance=ExtResource( 15 )]
+visible = false
+margin_left = -8.0
+margin_right = 1285.0
+margin_bottom = 744.0
+color = Color( 0, 0, 0, 0.807843 )
+
+[node name="Black" parent="Cam" instance=ExtResource( 10 )]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 3, 1 )
+motion_mirroring = Vector2( 1280, 0 )
+
+[node name="Image" type="Sprite" parent="ParallaxBackground/Sky"]
+scale = Vector2( 1.92342, 1.91733 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Background3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1280, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Background3"]
+position = Vector2( -36, -79 )
+color = Color( 0.980392, 0.839216, 0.647059, 1 )
+polygon = PoolVector2Array( -76, 735, 170, 738, 238, 669, 354, 660, 522, 724, 598, 698, 663, 615, 777.033, 648.182, 902, 660, 961, 689, 1046, 695, 1267, 743, 1341, 745, 1317, 783, -80, 782 )
+
+[node name="Background4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 1.3, 1 )
+motion_mirroring = Vector2( 1280, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Background4"]
+position = Vector2( -23, -50 )
+color = Color( 0.811765, 0.72549, 0.592157, 1 )
+polygon = PoolVector2Array( -76, 735, 230, 705, 276, 683, 357, 669, 598, 698, 679, 656, 821, 667, 907, 686, 1046, 695, 1200.2, 710.42, 1246, 715, 1322, 724, 1317, 783, -80, 782 )
+
+[node name="Background2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 1.7, 1 )
+motion_mirroring = Vector2( 1280, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Background2"]
+position = Vector2( -18, -5 )
+color = Color( 0.482353, 0.560784, 0.631373, 1 )
+polygon = PoolVector2Array( -76, 735, 29, 690, 149, 665, 598, 698, 669, 675, 881, 648, 1114, 699, 1232, 692, 1319, 711, 1317, 783, -80, 782 )
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 3, 1 )
+motion_mirroring = Vector2( 1280, 0 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Background"]
+position = Vector2( 1, 5 )
+color = Color( 0.337255, 0.443137, 0.537255, 1 )
+polygon = PoolVector2Array( 4, 750, -20, 706, 137, 715, 236, 707, 276, 683, 357, 669, 441, 682, 504, 701, 598, 698, 669, 675, 744, 654, 796, 654, 837, 663, 907, 686, 1046, 695, 1158, 679, 1264, 678, 1319, 711, 1317, 783, -80, 782 )
+
+[node name="Gameplay" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0, 0 )
+
+[node name="Player" parent="ParallaxBackground/Gameplay" instance=ExtResource( 4 )]
+position = Vector2( 237, 221 )
+colorPath = NodePath("../../../Cam/Special")
+
+[node name="Position2D2" type="Position2D" parent="ParallaxBackground/Gameplay/Player"]
+position = Vector2( 2, 2 )
+
+[node name="Warn" type="Node2D" parent="ParallaxBackground/Gameplay/Player"]
+visible = false
+position = Vector2( -9, 112 )
+scale = Vector2( 2.43988, 2.15573 )
+
+[node name="Font" type="Polygon2D" parent="ParallaxBackground/Gameplay/Player/Warn"]
+position = Vector2( 5, -73 )
+scale = Vector2( 0.168426, 0.334018 )
+color = Color( 1, 0.913725, 0, 1 )
+polygon = PoolVector2Array( -57.6269, -49.2029, 61.1194, -49.2029, 2, -148 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="ParallaxBackground/Gameplay/Player/Warn"]
+position = Vector2( -1, -3 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 6, -112, 4, -98, 8, -98, 8, -112 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="ParallaxBackground/Gameplay/Player/Warn"]
+position = Vector2( -1, 0 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 4, -97, 3, -93, 6, -93, 7, -97 )
+
+[node name="Beam" parent="ParallaxBackground/Gameplay" instance=ExtResource( 3 )]
+position = Vector2( -112, -28 )
+cast_to = Vector2( 814, -2.00294 )
+
+[node name="WallsContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 1, 0 )
+script = ExtResource( 12 )
+
+[node name="Walls" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 4378, 140 )
+
+[node name="Walls2" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 4466, 218 )
+
+[node name="Walls10" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 1610, 169 )
+
+[node name="Walls11" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 1581, 287 )
+
+[node name="Walls12" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 1547, 415 )
+
+[node name="Walls3" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 4565, 306 )
+
+[node name="Walls4" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 4639, 407 )
+
+[node name="Walls6" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 5662, 416 )
+
+[node name="Walls7" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 5751, 310 )
+
+[node name="Walls8" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 5836, 191 )
+
+[node name="Walls9" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 5891, 61 )
+
+[node name="Walls5" parent="ParallaxBackground/Gameplay/WallsContainer" instance=ExtResource( 20 )]
+position = Vector2( 4268, 97.0001 )
+
+[node name="ExplosionContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 1, 0 )
+
+[node name="Activator" parent="ParallaxBackground/Gameplay/ExplosionContainer" instance=ExtResource( 5 )]
+position = Vector2( 9333, 21 )
+
+[node name="EnemyContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( -1, -88 )
+
+[node name="PopCorn" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 2136, 477 )
+
+[node name="PopCorn6" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 3526, 374 )
+
+[node name="PopCorn8" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 3531, 575 )
+
+[node name="PopCorn10" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 3624, 474 )
+
+[node name="PopCorn12" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 4980, 297 )
+
+[node name="PopCorn13" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 4887, 193 )
+
+[node name="PopCorn14" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 4893, 382 )
+
+[node name="PopCorn4" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 1912, 404 )
+
+[node name="PopCorn34" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 2136, 329 )
+
+[node name="PopCorn3" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 2033, 405 )
+
+[node name="Normal2" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 18 )]
+position = Vector2( 4208, 308 )
+
+[node name="Hard" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 22 )]
+position = Vector2( 6609, 429 )
+
+[node name="Normal" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 18 )]
+position = Vector2( 8027, 329 )
+
+[node name="Normal3" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 18 )]
+position = Vector2( 8028, 613 )
+
+[node name="PopCorn2" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7723, 304 )
+posPath = NodePath("../PopCorn/Node2D/Pos")
+extPath = NodePath("../PopCorn/Ext")
+intPath = NodePath("../PopCorn/Int")
+tweenPath = NodePath("../PopCorn/Node2D/Tween")
+canonsContainerPath = NodePath("../PopCorn/Node2D2")
+
+[node name="PopCorn17" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7655, 430 )
+posPath = NodePath("../PopCorn/Node2D/Pos")
+extPath = NodePath("../PopCorn/Ext")
+intPath = NodePath("../PopCorn/Int")
+tweenPath = NodePath("../PopCorn/Node2D/Tween")
+canonsContainerPath = NodePath("../PopCorn/Node2D2")
+
+[node name="PopCorn5" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7547, 318 )
+
+[node name="PopCorn16" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7611, 252 )
+
+[node name="PopCorn7" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7521, 516 )
+posPath = NodePath("../PopCorn3/Node2D/Pos")
+extPath = NodePath("../PopCorn3/Ext")
+intPath = NodePath("../PopCorn3/Int")
+tweenPath = NodePath("../PopCorn3/Node2D/Tween")
+canonsContainerPath = NodePath("../PopCorn3/Node2D2")
+
+[node name="PopCorn15" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7521, 405 )
+posPath = NodePath("../PopCorn3/Node2D/Pos")
+extPath = NodePath("../PopCorn3/Ext")
+intPath = NodePath("../PopCorn3/Int")
+tweenPath = NodePath("../PopCorn3/Node2D/Tween")
+canonsContainerPath = NodePath("../PopCorn3/Node2D2")
+
+[node name="PopCorn9" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7613, 599 )
+posPath = NodePath("../PopCorn4/Node2D/Pos")
+extPath = NodePath("../PopCorn4/Ext")
+intPath = NodePath("../PopCorn4/Int")
+tweenPath = NodePath("../PopCorn4/Node2D/Tween")
+canonsContainerPath = NodePath("../PopCorn4/Node2D2")
+
+[node name="PopCorn11" parent="ParallaxBackground/Gameplay/EnemyContainer" instance=ExtResource( 17 )]
+position = Vector2( 7734, 573 )
+
+[node name="BossContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 1, 1 )
+
+[node name="LaserContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 1, 0 )
+script = ExtResource( 12 )
+
+[node name="ObstaclesContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+script = ExtResource( 12 )
+
+[node name="Laser" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 2513.8, 39.8 )
+
+[node name="Laser3" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 3154, 106 )
+
+[node name="Laser4" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 5167, -272 )
+
+[node name="Laser5" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 5481, -229 )
+
+[node name="Laser6" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 6596, -133 )
+scale = Vector2( 1, 1.6 )
+
+[node name="Laser7" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 7529, -128 )
+scale = Vector2( 1, 1.6 )
+
+[node name="Laser8" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 11 )]
+position = Vector2( 8457, -106 )
+scale = Vector2( 1, 1.6 )
+
+[node name="Ob" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob"]
+polygon = PoolVector2Array( 1476, 450, 1404, 653, 1298, 758, 1671, 765, 1640, 699, 1690, 560, 1617, 484 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob"]
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1327, 724, 1282, 764, 1384, 773, 1686, 774, 1656, 700, 1698, 556, 1625, 482, 1479, 447, 1400, 639 )
+
+[node name="Ob6" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 2762, 120 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob6"]
+position = Vector2( -584, 28 )
+polygon = PoolVector2Array( 1476, 450, 1404, 653, 1466, 800, 1671, 765, 1640, 699, 1690, 560, 1617, 484, 1538, 610 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob6"]
+position = Vector2( -586, 30 )
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1384, 773, 1686, 774, 1656, 700, 1698, 556, 1625, 482, 1532, 612, 1479, 447, 1400, 639 )
+
+[node name="Ob8" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 3268, 178 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob8"]
+position = Vector2( -584, 28 )
+polygon = PoolVector2Array( 1450, 525, 1404, 653, 1361, 925, 1466, 800, 1671, 765, 1640, 699, 1690, 560, 3085, 895, 2919, 265, 2488, 99, 2027, 210, 2034, 295 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob8"]
+position = Vector2( -606, 103 )
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1389, 848, 1683, 848, 2185, 815, 3110, 822, 2951, 187, 2512, 31, 2049, 127, 2051, 215, 1479, 447, 1400, 639 )
+
+[node name="Ob7" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 2676, -666 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob7"]
+polygon = PoolVector2Array( 1476, 450, 1350, 548, 1404, 653, 1298, 758, 1490, 676, 1504, 734, 1595, 716, 1640, 699, 1690, 560, 1617, 484 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob7"]
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1327, 724, 1282, 764, 1490, 668, 1499, 730, 1656, 700, 1698, 556, 1625, 482, 1479, 447, 1342, 546, 1400, 639 )
+
+[node name="Ob2" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 448, -602 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob2"]
+position = Vector2( -220.7, -80.3 )
+polygon = PoolVector2Array( 1476, 450, 1089, 591, 1298, 758, 1546, 809, 1557, 673, 1690, 560, 1617, 484 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob2"]
+position = Vector2( -361.7, 18.7 )
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1226, 499, 1447, 664, 1689, 715, 1698, 556, 1625, 482, 1479, 447 )
+
+[node name="Ob3" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 1652, -533 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob3"]
+position = Vector2( -596.1, -136.6 )
+polygon = PoolVector2Array( 1476, 450, 1089, 591, 1276, 664, 1306, 768, 2159.1, 792.6, 2374.1, 635.6, 2238.1, 539.6, 1688, 636, 1690, 560, 1617, 484 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob3"]
+position = Vector2( -722.2, -29.2 )
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1226, 499, 1404, 556, 1447, 664, 2274.2, 687.2, 2510.2, 528.2, 1823, 530, 1625, 482, 1479, 447 )
+
+[node name="Ob4" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 1765, 265 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob4"]
+position = Vector2( -587.1, -124.6 )
+polygon = PoolVector2Array( 1501, 388, 1089, 591, 1276, 664, 1306, 768, 1752, 712, 1688, 636, 1497, 592 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob4"]
+position = Vector2( -722.2, -29.2 )
+color = Color( 0.321569, 0.321569, 0.321569, 1 )
+polygon = PoolVector2Array( 1226, 499, 1404, 556, 1447, 664, 1898, 613, 1823, 530, 1625, 482, 1623, 279 )
+
+[node name="Ob5" type="StaticBody2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+position = Vector2( 2624, -191 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob5"]
+position = Vector2( -850, 400 )
+polygon = PoolVector2Array( 1276, 664, 1306, 768, 1485, 674, 1445, 539, 1305, 552 )
+
+[node name="Polygon2D" type="Polygon2D" parent="ParallaxBackground/Gameplay/ObstaclesContainer/Ob5"]
+position = Vector2( -975, 506 )
+color = Color( 0.352941, 0.352941, 0.352941, 1 )
+polygon = PoolVector2Array( 1386, 523, 1404, 556, 1447, 664, 1613, 564, 1642, 517, 1625, 482, 1575, 428, 1435, 445 )
+
+[node name="Level" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 13 )]
+position = Vector2( 2834, 390 )
+
+[node name="Level2" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 19 )]
+position = Vector2( 3736, 419 )
+
+[node name="Ghost" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 21 )]
+position = Vector2( 5325, 147 )
+
+[node name="Level3" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 19 )]
+position = Vector2( 6118, 320 )
+
+[node name="Level4" parent="ParallaxBackground/Gameplay/ObstaclesContainer" instance=ExtResource( 13 )]
+position = Vector2( 4810, 196 )
+
+[node name="Label" type="Label" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+margin_left = 2295.0
+margin_top = 202.0
+margin_right = 2472.0
+margin_bottom = 241.0
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "SPECIAL !"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="ParallaxBackground/Gameplay/ObstaclesContainer"]
+margin_left = 5240.0
+margin_top = 72.0
+margin_right = 5417.0
+margin_bottom = 111.0
+custom_colors/font_color_shadow = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "FORCE"
+align = 1
+valign = 1
+
+[node name="BulletContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 1, 0 )
+
+[node name="CollectibleContainer" type="Node2D" parent="ParallaxBackground/Gameplay"]
+position = Vector2( 0, 2 )
+script = ExtResource( 12 )

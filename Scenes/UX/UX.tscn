@@ -1,0 +1,149 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Graphism/BarTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UX/UX.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/Font.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Graphism/Laser.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.462745, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Theme" id=9]
+ProgressBar/colors/font_color = Color( 0.94, 0.94, 0.94, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 7 )
+ProgressBar/styles/fg = SubResource( 8 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 0.74902, 0, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Theme" id=3]
+ProgressBar/colors/font_color = Color( 0, 0, 0, 1 )
+ProgressBar/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = null
+ProgressBar/styles/bg = SubResource( 4 )
+ProgressBar/styles/fg = SubResource( 5 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 30
+font_data = ExtResource( 3 )
+
+[node name="UX" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+selfPath = NodePath(".")
+playerHealthPath = NodePath("Life")
+playerBombPath = NodePath("Label")
+playerFeaturePath = NodePath("Feature")
+xFeaturePath = NodePath("Polygon2D")
+scorePath = NodePath("Score/S")
+tweenPath = NodePath("Tween")
+scoreNodePath = NodePath("Score")
+bossHeathPath = NodePath("Boss")
+
+[node name="Player" type="Label" parent="."]
+margin_left = 958.0
+margin_top = 8.0
+margin_right = 1085.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 2 )
+text = "PLAYER - 1"
+
+[node name="Life" type="ProgressBar" parent="."]
+margin_left = 19.0
+margin_top = 21.0
+margin_right = 373.0
+margin_bottom = 46.0
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+max_value = 20.0
+value = 20.0
+percent_visible = false
+
+[node name="Boss" type="ProgressBar" parent="."]
+margin_left = 37.0
+margin_top = 665.0
+margin_right = 1258.0
+margin_bottom = 690.0
+theme = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+max_value = 3000.0
+value = 3000.0
+percent_visible = false
+
+[node name="Feature" type="ProgressBar" parent="."]
+margin_left = 304.0
+margin_top = 76.0
+margin_right = 572.0
+margin_bottom = 95.0
+rect_rotation = 180.0
+theme = SubResource( 3 )
+max_value = 1.0
+value = 0.5
+percent_visible = false
+
+[node name="Label" type="Label" parent="."]
+margin_left = 72.0
+margin_top = 81.0
+margin_right = 111.0
+margin_bottom = 107.0
+custom_fonts/font = SubResource( 1 )
+text = "x 3"
+align = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+position = Vector2( -2205, -636 )
+scale = Vector2( 2.71875, 1 )
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 870, 687, 864, 695, 870, 702, 860, 712, 866, 717, 875, 707, 883, 718, 891, 711, 882, 702, 892, 697, 883, 688, 877, 696 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 52.2, 93 )
+scale = Vector2( 0.43125, 0.417188 )
+texture = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Score" type="Node2D" parent="."]
+position = Vector2( 1022, 26 )
+
+[node name="S" type="Label" parent="Score"]
+margin_left = -186.0
+margin_top = -5.0
+margin_right = 189.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 6 )
+text = "SCORE : "
+align = 1
+valign = 1
